@@ -15,6 +15,16 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
+    /* Strict */
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+
+    /* Path aliases */
+    "paths": {
+      "@modules/*": ["./src/modules/*"]
+    },
+
     /* Linting */
     "noUnusedLocals": true,
     "noUnusedParameters": true,

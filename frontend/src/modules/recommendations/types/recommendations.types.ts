@@ -1,4 +1,4 @@
-export type MovieRecommendation = {
+export interface MovieRecommendation {
   title: string;
   year: number;
   genre: string;
@@ -8,8 +8,12 @@ export type MovieRecommendation = {
   synopsis: string;
   similarTo: string[];
   justification: string;
-};
+}
 
-export type RecommendationsResponse = {
+export interface RecommendationsResponse {
   recommendations: MovieRecommendation[];
-};
+}
+
+export interface CreateRecommendationDto {
+  prompt: string;
+}

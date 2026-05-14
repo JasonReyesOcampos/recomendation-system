@@ -1,5 +1,22 @@
 {
-	"dependencies": {
-		"@google/generative-ai": "^0.24.1"
-	}
+  "name": "recomendation-system",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Sistema de recomendaciones de películas (NestJS + React).",
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@10.0.0",
+  "scripts": {
+    "dev:backend": "pnpm --filter backend start:dev",
+    "dev:frontend": "pnpm --filter frontend dev",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "test": "pnpm --filter backend test",
+    "format": "prettier --write \"{backend,frontend}/**/*.{ts,tsx,js,jsx,json,md,css,html,yml,yaml}\"",
+    "format:check": "prettier --check \"{backend,frontend}/**/*.{ts,tsx,js,jsx,json,md,css,html,yml,yaml}\""
+  },
+  "devDependencies": {
+    "prettier": "^3.4.2"
+  }
 }

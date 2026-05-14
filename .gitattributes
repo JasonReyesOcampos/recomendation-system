@@ -1,0 +1,21 @@
+# Normaliza fin de línea a LF en el repo (en disco respeta el SO).
+# Resuelve el problema de CRLF vs LF entre Windows/Mac/Linux.
+* text=auto eol=lf
+
+# Binarios — no tocar
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+*.svg  binary
+*.pdf  binary
+*.woff binary
+*.woff2 binary
+*.ttf  binary
+*.eot  binary
+
+# Lockfiles — siempre LF
+pnpm-lock.yaml text eol=lf
+package-lock.json text eol=lf
+yarn.lock text eol=lf
