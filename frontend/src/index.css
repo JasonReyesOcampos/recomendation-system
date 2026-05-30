@@ -1,5 +1,23 @@
 @import 'tailwindcss';
 
+@theme {
+  --color-cinema-black: #0c0a08;
+  --color-cinema-dark: #151210;
+  --color-cinema-panel: #1c1812;
+  --color-cinema-cream: #f0e4ce;
+  --color-cinema-ivory: #d4c9b0;
+  --color-cinema-muted: #8a7e68;
+  --color-cinema-gold: #c8a04a;
+  --color-cinema-gold-bright: #dbb856;
+  --color-cinema-gold-dim: #6b5a2e;
+  --color-cinema-red: #8b2020;
+  --color-cinema-red-dark: #3d1010;
+
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Lora', Georgia, serif;
+  --font-mono: 'Special Elite', 'Courier New', monospace;
+}
+
 @layer base {
   html,
   body,
@@ -8,16 +26,298 @@
   }
 
   body {
-    background-color: #0a0a0a;
-    color: #f5f5f5;
-    font-family:
-      ui-sans-serif,
-      system-ui,
-      -apple-system,
-      'Segoe UI',
-      Roboto,
-      sans-serif;
+    background-color: var(--color-cinema-black);
+    color: var(--color-cinema-cream);
+    font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9998;
+    background: radial-gradient(
+      ellipse at center,
+      transparent 40%,
+      rgba(0, 0, 0, 0.55) 100%
+    );
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.035;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-cinema-black);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-cinema-gold-dim);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-cinema-gold);
+  }
+}
+
+/* ── Marquee Banner ─────────────────────────── */
+
+.marquee-banner {
+  overflow: hidden;
+  background: linear-gradient(180deg, #1a1510, var(--color-cinema-dark));
+  border-bottom: 2px solid var(--color-cinema-gold);
+}
+
+.marquee-track {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: marquee-scroll 28s linear infinite;
+}
+
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* ── Marquee Lights ─────────────────────────── */
+
+.lights-strip {
+  position: relative;
+  height: 8px;
+  background: var(--color-cinema-black);
+}
+
+.lights-strip::before,
+.lights-strip::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    circle 2.5px,
+    var(--color-cinema-gold-bright) 50%,
+    transparent 100%
+  );
+  background-size: 22px 8px;
+  background-repeat: repeat-x;
+  background-position-y: center;
+}
+
+.lights-strip::before {
+  background-position-x: 5px;
+  animation: lights-a 1.2s ease-in-out infinite;
+}
+
+.lights-strip::after {
+  background-position-x: 16px;
+  animation: lights-b 1.2s ease-in-out infinite;
+}
+
+@keyframes lights-a {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.08;
+  }
+}
+
+@keyframes lights-b {
+  0%,
+  100% {
+    opacity: 0.08;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ── Staggered Card Entrance ────────────────── */
+
+.card-enter {
+  animation: card-enter 0.7s ease-out both;
+}
+
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ── Movie Card Hover ───────────────────────── */
+
+.movie-card {
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease,
+    border-color 0.4s ease;
+}
+
+.movie-card:hover {
+  transform: translateY(-6px) scale(1.015);
+  border-color: var(--color-cinema-gold);
+  box-shadow:
+    0 12px 40px rgba(200, 160, 74, 0.12),
+    0 0 80px rgba(200, 160, 74, 0.05);
+}
+
+/* ── Projector Flicker ──────────────────────── */
+
+.projector-flicker {
+  animation: projector-flicker 3s ease-in-out infinite;
+}
+
+@keyframes projector-flicker {
+  0% {
+    opacity: 0.3;
+  }
+  5% {
+    opacity: 1;
+  }
+  8% {
+    opacity: 0.45;
+  }
+  12% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  53% {
+    opacity: 0.35;
+  }
+  56% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* ── Film Perforations ──────────────────────── */
+
+.film-perfs {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 24px;
+  background-image: repeating-linear-gradient(
+    180deg,
+    transparent 0px,
+    transparent 4px,
+    var(--color-cinema-gold-dim) 4px,
+    var(--color-cinema-gold-dim) 16px,
+    transparent 16px,
+    transparent 20px
+  );
+  background-size: 10px 20px;
+  background-repeat: repeat-y;
+  opacity: 0.25;
+  animation: film-scroll 0.8s linear infinite;
+}
+
+.film-perfs-left {
+  left: 0;
+  background-position-x: 3px;
+}
+
+.film-perfs-right {
+  right: 0;
+  background-position-x: 11px;
+}
+
+@keyframes film-scroll {
+  0% {
+    background-position-y: 0;
+  }
+  100% {
+    background-position-y: 20px;
+  }
+}
+
+/* ── Ornament Divider ───────────────────────── */
+
+.ornament {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--color-cinema-gold-dim);
+}
+
+.ornament::before,
+.ornament::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-cinema-gold-dim),
+    transparent
+  );
+}
+
+/* ── Golden Shimmer Heading ─────────────────── */
+
+.golden-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-cinema-cream) 0%,
+    var(--color-cinema-gold-bright) 40%,
+    var(--color-cinema-cream) 60%,
+    var(--color-cinema-cream) 100%
+  );
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: golden-shimmer 8s ease-in-out infinite;
+}
+
+@keyframes golden-shimmer {
+  0% {
+    background-position: 100% center;
+  }
+  100% {
+    background-position: -100% center;
+  }
+}
+
+/* ── Gold Button Glow ───────────────────────── */
+
+.btn-gold {
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.2s ease;
+}
+
+.btn-gold:hover:not(:disabled) {
+  box-shadow: 0 0 24px rgba(200, 160, 74, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-gold:active:not(:disabled) {
+  transform: translateY(0);
 }

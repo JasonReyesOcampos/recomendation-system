@@ -1,5 +1,6 @@
-import type { FC } from 'react';
+import { useMemo, type FC } from 'react';
 import type { MovieRecommendation } from '../types/recommendations.types';
+import { enrichWithAvailability } from '../utils/availability.utils';
 import { MovieCard } from './movieCard';
 
 interface MovieGridProps {
@@ -7,15 +8,25 @@ interface MovieGridProps {
 }
 
 export const MovieGrid: FC<MovieGridProps> = ({ movies }) => {
-  if (movies.length === 0) return null;
+  const enriched = useMemo(
+    () => movies.map((m) => enrichWithAvailability(m)),
+    [movies],
+  );
+
+  if (enriched.length === 0) return null;
 
   return (
     <section
       aria-label="Películas recomendadas"
       className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
     >
-      {movies.map((movie) => (
-        <MovieCard key={`${movie.title}-${movie.year}`} movie={movie} />
+      {enriched.map((movie, index) => (
+        <MovieCard
+          key={`${movie.title}-${movie.year}`}
+          movie={movie}
+          availability={movie.availability}
+          index={index}
+        />
       ))}
     </section>
   );
